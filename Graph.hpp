@@ -1,3 +1,5 @@
+// Gabriel A. Sanchez; GabrielSR23; 801-23-8372
+
 #include <iostream>
 #include <vector>
 #include <stdexcept>
@@ -33,7 +35,15 @@ public:
     // Implementar!! 
     // Devuelve la cantidad de aristas
     int numEdges() const {
-        return 0;
+        int count = 0;
+        for(int i = 0; i < numVertices; i++){
+            for(int k = 0; k < numVertices; k++){
+                if(adjMatrix[i][k] == 1) {
+                    count++;
+                }
+            }
+        }
+        return count;
     }
 
     // Completa esta función
@@ -41,15 +51,34 @@ public:
     int inDegree(int u) const {
         if (u < 0 || u >= numVertices)
             throw std::out_of_range("Vertice fuera de rango");
-        else {
+
+        int count = 0;
+        for(int i = 0; i < numVertices; i++){
+            if(adjMatrix[i][u] == 1){
+                count++;
+            }
         }
+
+        return count;
     }
+    
 
     // Completa esta función
     // Devuelve cierto si u es el nodo con mayor inDegree.
     // En caso de que haya varios nodos que tengan el mayor inDegree,
     // devuelve true si u es uno de ellos
     bool isInfluencer(int u) const  {
+         if (u < 0 || u >= numVertices)
+            throw std::out_of_range("Vertice fuera de rango");
+
+        int degree_U = inDegree(u);
+        for(int i = 0; i < numVertices; i++){
+            if(inDegree(i) > degree_U){
+                return false;
+            }
+        }
+
+        return true;
     }
 };
 
